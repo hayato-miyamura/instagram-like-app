@@ -17,9 +17,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/posts', 'PostController@index')->middleware('check.cookie');
+// ->middleware('check.cookie');
+Route::get('/posts', 'PostController@index');
 
 Route::post('/auth', 'LoginController@authenticate');
+Route::post('/upload', 'PostController@store');
 
 // ->middleware('check.cookie')
 

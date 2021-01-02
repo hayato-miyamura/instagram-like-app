@@ -41,8 +41,8 @@ class LoginController extends Controller
         $user_model = new User();
         $id_token = $request->input('idToken');
 
-        // \Log::debug("#####");
-        // \Log::debug($id_token);
+        \Log::debug("#####");
+        \Log::debug($id_token);
 
         try {
             $verified_id_token = $this->auth->verifyIdToken($id_token);
@@ -70,14 +70,14 @@ class LoginController extends Controller
             // メモ: 後ほど暗号化したuidを送るように実装
             return response()->json([
                 'message' => 'created',
-            ])->cookie('Cookie', "$firebase_user->displayName", 5);
+            ])->cookie('Cookie', "$firebase_user->uid", 5);
         }
 
         if ($user) {
 
             return response()->json([
                 'message' => 'existing',
-            ])->cookie('Cookie', "$firebase_user->displayName", 5);
+            ])->cookie('Cookie', "$firebase_user->uid", 5);
         }
 
     }

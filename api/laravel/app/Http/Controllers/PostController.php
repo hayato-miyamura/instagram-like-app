@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -33,7 +34,15 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post_model = new Post();
+
+        $post_model->caption = $request->input('text');
+
+        $uploadImg = $post_model->image = $request->file('image');
+        $path = Storage::disk(config('filesystems.cloud'))->putFile('/', $uploadImg, 'public');
+        $post_model->image = Storage::disk(config('filesystems.cloud'))->url($path);
+
+        $post_model->save();
     }
 
     /**
